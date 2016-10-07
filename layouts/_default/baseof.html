@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html ⚡>
+  <head>
+    {{ partial "meta.html" . }}
+    {{ with .Site.Params.googlefonts }}
+    <link href="{{ . }}" rel="stylesheet">
+    {{ else }}
+    <link href="https://fonts.googleapis.com/css?family=Quicksand|Rubik" rel="stylesheet">
+    {{ end }}
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet">
+    <title>{{ block "title" . }}{{ end }}{{ .Site.Title }}</title>
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
+    <script async custom-element="amp-twitter" src="https://cdn.ampproject.org/v0/amp-twitter-0.1.js"></script>
+    {{ block "meta" . }}{{ end }}
+    <style amp-custom>
+      {{ replaceRE " +" " " (replaceRE "\n" "" (partial "styles.css" .)) | safeCSS }}
+
+      {{ with .Site.Params.fontfamily }} body { font-family: {{ . | safeCSS }}; } {{ end }}
+      {{ with .Site.Params.logofontfamily }} .h-logo { font-family: {{ . | safeCSS }}; } {{ end }}
+    </style>
+  </head>
+  <body>
+    {{ if ne (getenv "HUGO_ENV") "DEV" }}
+    <amp-analytics type="googleanalytics" id="analytics1">
+      <script type="application/json">
+        {
+          "vars": {
+            "account": "{{ .Site.Params.GoogleAnalyticsUserID }}"
+          },
+          "triggers": {
+            "trackPageview": {
+              "on": "visible",
+              "request": "pageview"
+            }
+          }
+        }
+      </script>
+    </amp-analytics>
+    {{ end }}
+
+    <div class="container">
+      <header class="l-header">
+
+        <div class="p-logo">
+          <a href="{{ .Site.BaseURL }}" class="h-logo">{{ .Site.Title }}</a>
+        </div>
+
+        <nav class="p-nav header">
+          <ul>
+            {{ range $key, $value := .Site.Sections }}
+            {{ if $key }}<li><a href="{{ $.Site.BaseURL }}{{ $key | urlize }}" class="h-logo">{{ $key }}</a></li>{{ end }}
+            {{ end }}
+          </ul>
+        </nav>
+
+      </header>
+
+      <main>
+        {{ block "main" . }}
+        {{ end }}
+      </main>
+
+      <footer class="l-footer">
+        <p>{{ with .Site.Copyright }}{{ . | safeHTML }}{{ else }}&copy; {{ .Site.Title }}{{ end }}</p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_tropic">Tropic</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </footer>
+    </div>
+
+  </body>
+</html>
+

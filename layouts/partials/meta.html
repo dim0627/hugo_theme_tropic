@@ -1,0 +1,14 @@
+<meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+{{ with .Site.Params.themecolor }}
+<meta name="theme-color" content="{{ . }}">
+{{ end }}
+{{ with .Site.Params.contact }}<meta name="contact" content="{{ . }}">{{ end }}
+{{ .Hugo.Generator }}
+
+<link rel="apple-touch-icon" href="{{ .Site.BaseURL }}images/logo.png">
+{{ with .RSSLink }}<link rel="alternate" type="application/rss+xml" title="RSS" href="{{ . }}">{{ end }}
+
+<link rel="canonical" href="{{ .Permalink }}">
+
