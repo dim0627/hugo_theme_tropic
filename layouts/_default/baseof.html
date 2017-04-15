@@ -15,7 +15,7 @@
     {{ with .Site.Params.ampscripts }}{{ . | safeHTML }}{{ end }}
     {{ block "meta" . }}{{ end }}
     <style amp-custom>
-      {{ replaceRE " +" " " (replaceRE "\n" "" (partial "styles.css" .)) | safeCSS }}
+      {{ replaceRE " +" " " (replaceRE "\n" "" (partial "styles.html" .)) | safeCSS }}
 
       {{ with .Site.Params.fontfamily }} body { font-family: {{ . | safeCSS }}; } {{ end }}
       {{ with .Site.Params.logofontfamily }} .h-logo { font-family: {{ . | safeCSS }}; } {{ end }}
